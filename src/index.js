@@ -2,6 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-import ExchangeWidget from './Components/ExchangeWidget';
+import App from './App';
 
-ReactDOM.render(<ExchangeWidget />, document.getElementById('root'));
+import createStore from './store/createStore';
+
+const store = createStore();
+
+const render = (App) => {
+    return ReactDOM.render(
+        <App store={store} />,
+        document.getElementById('root')
+    );
+};
+
+render(App);
+
+if (module.hot) {
+    module.hot.accept('./App', () => {
+        const NextApp = require('./App').default;
+        render(NextApp);
+    })
+}
