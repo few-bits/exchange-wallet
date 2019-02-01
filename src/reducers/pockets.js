@@ -1,18 +1,14 @@
 import {
     CURRENCY_EUR,
     CURRENCY_USD,
-    CURRENCY_GBP,
 } from '../Constants';
 
 export default (state = {
-    [CURRENCY_EUR]: {
-        balance: 100
+    source: {
+        currency: CURRENCY_EUR,
     },
-    [CURRENCY_USD]: {
-        balance: 101
-    },
-    [CURRENCY_GBP]: {
-        balance: 102
+    receiver: {
+        currency: CURRENCY_USD,
     }
 }, action) => {
     switch (action.type) {
