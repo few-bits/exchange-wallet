@@ -15,7 +15,7 @@ const ExchangeWidget = ({ account }) => {
             </header>
         </div>
     );
-}
+};
 
 const mapStateToProps = (state) => ({
     account: state.account,

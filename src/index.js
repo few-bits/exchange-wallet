@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
@@ -8,9 +9,11 @@ import createStore from './store/createStore';
 
 const store = createStore();
 
-const render = (App) => {
+const render = (Component) => {
     return ReactDOM.render(
-        <App store={store} />,
+        <Provider store={store}>
+            <Component />
+        </Provider>,
         document.getElementById('root')
     );
 };
