@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './Wallet.module.scss';
+import styles from './styles.module.scss';
 import {
     CURRENCY_EUR,
     CURRENCY_USD,
     CURRENCY_GBP,
 } from '../../Constants'
 
-const Wallet = ({ currency, balance, rate }) => (
+const Pocket = ({ currency, balance, rate }) => (
     <div className={styles.balance}>
         [{currency}] {balance} ({rate})
     </div>
 );
 
-Wallet.propTypes = {
+Pocket.propTypes = {
     currency: PropTypes.oneOf([
         CURRENCY_EUR,
         CURRENCY_USD,
@@ -24,8 +24,8 @@ Wallet.propTypes = {
     rate: PropTypes.number,
 };
 
-Wallet.defaultProps = {
+Pocket.defaultProps = {
     rate: 0,
 };
 
-export default Wallet;
+export default Pocket;

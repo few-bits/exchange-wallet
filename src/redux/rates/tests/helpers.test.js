@@ -1,4 +1,4 @@
-import { getRates } from './helpers';
+import { getRates } from '../helpers';
 
 describe('getRate', () => {
     it('full data', () => {
@@ -41,7 +41,7 @@ describe('getRate', () => {
         expect(getRates(currencies, serverData)).toEqual(result);
     });
 
-    it('wrong data undefined', () => {
+    it('wrong data [undefined]', () => {
         const currencies = ['USD', 'EUR'];
         const serverData = undefined;
         const result = {};

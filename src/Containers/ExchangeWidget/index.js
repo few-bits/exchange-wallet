@@ -8,7 +8,7 @@ import {
     CURRENCY_USD,
     CURRENCY_GBP,
 } from '../../Constants';
-import Wallet from '../../Components/Wallet';
+import Pocket from '../../Components/Pocket';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
 
@@ -67,7 +67,6 @@ class ExchangeWidget extends Component {
             pockets,
             rates,
         } = this.props;
-        console.log(rates);
 
         const {currency: sourceCurrency} = pockets.source;
         const {currency: receiverCurrency} = pockets.receiver;
@@ -78,12 +77,12 @@ class ExchangeWidget extends Component {
         return (
             <div className={styles.exchangeWidget}>
                 <header className={styles.header}>
-                    <Wallet
+                    <Pocket
                         currency={sourceCurrency}
                         balance={account[sourceCurrency].balance}
                         rate={receiverRate}
                     />
-                    <Wallet
+                    <Pocket
                         currency={receiverCurrency}
                         balance={account[receiverCurrency].balance}
                         rate={sourceRate}
