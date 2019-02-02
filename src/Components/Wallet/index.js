@@ -8,9 +8,9 @@ import {
     CURRENCY_GBP,
 } from '../../Constants'
 
-const Wallet = ({ balance }) => (
+const Wallet = ({ currency, balance, rate }) => (
     <div className={styles.balance}>
-        { balance }
+        [{currency}] {balance} ({rate})
     </div>
 );
 
@@ -21,6 +21,7 @@ Wallet.propTypes = {
         CURRENCY_GBP,
     ]).isRequired,
     balance: PropTypes.number.isRequired,
+    rate: PropTypes.number.isRequired,
 };
 
 export default Wallet;
