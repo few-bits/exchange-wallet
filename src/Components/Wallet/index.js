@@ -21,7 +21,11 @@ Wallet.propTypes = {
         CURRENCY_GBP,
     ]).isRequired,
     balance: PropTypes.number.isRequired,
-    rate: PropTypes.number.isRequired,
+    rate: PropTypes.number,
+};
+
+Wallet.defaultProps = {
+    rate: 0,
 };
 
 export default Wallet;

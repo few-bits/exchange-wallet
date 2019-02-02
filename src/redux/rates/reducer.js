@@ -4,27 +4,26 @@ import {
     CURRENCY_GBP,
 } from '../../Constants';
 
+import { SET_RATES } from './types';
+import { getRates } from './helpers';
+
 export default (state = {
-    [CURRENCY_EUR]: {
-        rates: {
-            [CURRENCY_USD]: 1,
-            [CURRENCY_GBP]: 2,
-        },
-    },
-    [CURRENCY_USD]: {
-        rates: {
-            [CURRENCY_EUR]: 3,
-            [CURRENCY_GBP]: 4,
-        },
-    },
-    [CURRENCY_GBP]: {
-        rates: {
-            [CURRENCY_EUR]: 5,
-            [CURRENCY_USD]: 6,
-        },
-    }
+    [CURRENCY_EUR]: {},
+    [CURRENCY_USD]: {},
+    [CURRENCY_GBP]: {},
 }, action) => {
     switch (action.type) {
+        case SET_RATES: {
+            const { rates: serverData } = action.payload;
+            const ratesArray = Object.keys(state);
+
+            const newRates = getRates(ratesArray, serverData);
+
+            return {
+                ...state,
+                ...newRates,
+            };
+        }
         default:
             return state
     }
