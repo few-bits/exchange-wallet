@@ -2,7 +2,7 @@ import {
     CURRENCY_EUR,
     CURRENCY_USD,
     CURRENCY_GBP,
-} from '../Constants';
+} from '../../Constants';
 
 export default (state = {
     [CURRENCY_EUR]: {

@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import rootReducer from '../reducers';
+import rootReducer from '../redux';
 
 export default () => {
     const store = createStore(
@@ -11,7 +11,7 @@ export default () => {
     );
 
     if (module.hot) {
-        module.hot.accept('../reducers', () => {
+        module.hot.accept('../redux', () => {
             store.replaceReducer(rootReducer)
         })
     }

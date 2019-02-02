@@ -1,7 +1,7 @@
 import {
     CURRENCY_EUR,
     CURRENCY_USD,
-} from '../Constants';
+} from '../../Constants';
 
 export default (state = {
     source: {
