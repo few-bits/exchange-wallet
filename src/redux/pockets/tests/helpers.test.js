@@ -1,27 +1,24 @@
-import { getPocketData } from '../helpers';
+import { getPocketAmount } from '../helpers';
 
-describe('getPocketData', () => {
+describe('getPocketAmount', () => {
     it('pocket1 && pocket2', () => {
         const result = {
-            credit: null,
-            debit: 10* 0.5,
+            amount: 10* 0.5,
         };
-        expect(getPocketData('pocket1', 'pocket2', '10', 0.5)).toEqual(result);
+        expect(getPocketAmount({ active: false, rate: 0.5 }, '10')).toEqual(result);
     });
 
     it('pocket1 && pocket1', () => {
         const result = {
-            credit: 10,
-            debit: null,
+            amount: 10,
         };
-        expect(getPocketData('pocket1', 'pocket1', '10', 0.5)).toEqual(result);
+        expect(getPocketAmount({ active: true, rate: 0.5 }, '10')).toEqual(result);
     });
 
     it('pocket1 credit as string', () => {
         const result = {
-            credit: 10.26,
-            debit: null,
+            amount: 10.26,
         };
-        expect(getPocketData('pocket1', 'pocket1', '10.26', 0.5)).toEqual(result);
+        expect(getPocketAmount({ active: true, rate: 0.5 }, '10.26')).toEqual(result);
     });
 });

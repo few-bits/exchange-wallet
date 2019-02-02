@@ -1,7 +1,7 @@
 import {
     SET_ACTIVE,
-    SET_CURRENCY,
-    CREDIT_CHANGE
+    CURRENCY_CHANGE,
+    AMOUNT_CHANGE
 } from './types';
 
 export const setActive = (pocketKey) => (dispatch) => dispatch({
@@ -9,19 +9,14 @@ export const setActive = (pocketKey) => (dispatch) => dispatch({
     payload: { pocketKey },
 });
 
-export const setCurrency = (currency, pocketKey) => (dispatch) => dispatch({
-    type: SET_CURRENCY,
+export const currencyOnChange = (currency, pocketKey) => (dispatch) => dispatch({
+    type: CURRENCY_CHANGE,
     payload: { pocketKey, currency },
 });
 
-export const onCreditChange = (pocketKey, value, rate) => (dispatch) => {
-    console.log(pocketKey, value, rate);
+export const amountOnChange = (value) => (dispatch) => {
     dispatch({
-        type: CREDIT_CHANGE,
-        payload: {
-            pocketKey,
-            value,
-            rate
-        },
+        type: AMOUNT_CHANGE,
+        payload: { value },
     });
 };

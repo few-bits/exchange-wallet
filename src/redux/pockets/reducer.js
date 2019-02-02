@@ -6,24 +6,26 @@ import {
 } from '../../Constants';
 import {
     SET_ACTIVE,
-    SET_CURRENCY,
-    CREDIT_CHANGE,
+    CURRENCY_CHANGE,
+    AMOUNT_CHANGE,
 } from './types';
+import { SET_RATES } from '../rates/types';
 
-import { getPocketData } from './helpers';
+import { getPocketAmount } from './helpers';
+import { getRates } from '../rates/helpers';
 
 export default (state = {
-    pocket1: {
+    [POCKET_KEY_1]: {
         active: true,
-        credit: null,
-        debit: null,
+        amount: 0,
         currency: CURRENCY_EUR,
+        rate: null,
     },
-    pocket2: {
+    [POCKET_KEY_2]: {
         active: false,
-        credit: null,
-        debit: null,
+        amount: 0,
         currency: CURRENCY_USD,
+        rate: null,
     }
 }, action) => {
     switch (action.type) {
@@ -34,42 +36,66 @@ export default (state = {
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
                     active: pocketKey === POCKET_KEY_1,
-                    credit: null,
-                    debit: null,
+                    amount: null,
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
                     active: pocketKey === POCKET_KEY_2,
-                    credit: null,
-                    debit: null,
+                    amount: null,
                 },
             };
         }
-        case SET_CURRENCY: {
+        case CURRENCY_CHANGE: {
             const { pocketKey, currency } = action.payload;
             return {
                 ...state,
+
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
                     currency: pocketKey === POCKET_KEY_1 ? currency : state[POCKET_KEY_1].currency,
+                    amount: null,
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
                     currency: pocketKey === POCKET_KEY_2 ? currency : state[POCKET_KEY_2].currency,
+                    amount: null,
                 },
             };
         }
-        case CREDIT_CHANGE: {
-            const { pocketKey, value, rate } = action.payload;
+        case AMOUNT_CHANGE: {
+            const { value } = action.payload;
             return {
                 ...state,
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
-                    ...getPocketData(POCKET_KEY_1, pocketKey, value, rate),
+                    ...getPocketAmount(state[POCKET_KEY_1], value),
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
-                    ...getPocketData(POCKET_KEY_2, pocketKey, value, rate),
+                    ...getPocketAmount(state[POCKET_KEY_2], value),
+                },
+            };
+        }
+        case SET_RATES: {
+            const { rates: serverData } = action.payload;
+            const currencyPocket1 = state[POCKET_KEY_1].currency;
+            const currencyPocket2 = state[POCKET_KEY_2].currency;
+
+            const ratesPocket1 = getRates([currencyPocket1], serverData);
+            const ratesPocket2 = getRates([currencyPocket2], serverData);
+
+            const ratePocket1 = ratesPocket1[currencyPocket1][currencyPocket2];
+            const ratePocket2 = ratesPocket2[currencyPocket2][currencyPocket1];
+
+            return {
+                ...state,
+                [POCKET_KEY_1]: {
+                    ...state[POCKET_KEY_1],
+                    rate: ratePocket1,
+                },
+                [POCKET_KEY_2]: {
+                    ...state[POCKET_KEY_2],
+                    rate: ratePocket2,
                 },
             };
         }

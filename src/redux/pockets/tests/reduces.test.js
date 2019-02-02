@@ -6,15 +6,15 @@ describe('rates reducer', () => {
         expect(reducer(undefined, {})).toEqual({
             pocket1: {
                 active: true,
-                credit: null,
-                debit: null,
+                amount: 0,
                 currency: 'EUR',
+                rate: null,
             },
             pocket2: {
                 active: false,
-                credit: null,
-                debit: null,
+                amount: 0,
                 currency: 'USD',
+                rate: null,
             }
         })
     });
@@ -24,14 +24,12 @@ describe('rates reducer', () => {
             reducer({
                 pocket1: {
                     active: false,
-                    credit: 10,
-                    debit: null,
+                    amount: 10,
                     currency: 'EUR',
                 },
                 pocket2: {
                     active: true,
-                    credit: null,
-                    debit: 2,
+                    amount: null,
                     currency: 'USD',
                 }
             }, {
@@ -43,36 +41,32 @@ describe('rates reducer', () => {
         ).toEqual({
             pocket1: {
                 active: true,
-                credit: null,
-                debit: null,
+                amount: null,
                 currency: 'EUR',
             },
             pocket2: {
                 active: false,
-                credit: null,
-                debit: null,
+                amount: null,
                 currency: 'USD',
             }
         });
     });
 
-    it('should handle SET_CURRENCY ', () => {
+    it('should handle CURRENCY_CHANGE ', () => {
         expect(
             reducer({
                 pocket1: {
                     active: false,
-                    credit: 10,
-                    debit: null,
+                    amount: 10,
                     currency: 'EUR',
                 },
                 pocket2: {
                     active: true,
-                    credit: null,
-                    debit: 2,
+                    amount: null,
                     currency: 'USD',
                 }
             }, {
-                type: types.SET_CURRENCY,
+                type: types.CURRENCY_CHANGE,
                 payload: {
                     pocketKey: 'pocket1',
                     currency: 'GBR'
@@ -81,53 +75,48 @@ describe('rates reducer', () => {
         ).toEqual({
             pocket1: {
                 active: false,
-                credit: 10,
-                debit: null,
+                amount: null,
                 currency: 'GBR',
             },
             pocket2: {
                 active: true,
-                credit: null,
-                debit: 2,
+                amount: null,
                 currency: 'USD',
             }
         });
     });
 
-    it('should handle CREDIT_CHANGE ', () => {
+    it('should handle AMOUNT_CHANGE ', () => {
         expect(
             reducer({
                 pocket1: {
                     active: false,
-                    credit: 10,
-                    debit: null,
+                    amount: 10,
                     currency: 'EUR',
+                    rate: 0.376,
                 },
                 pocket2: {
                     active: true,
-                    credit: null,
-                    debit: 2,
+                    amount: null,
                     currency: 'USD',
                 }
             }, {
-                type: types.CREDIT_CHANGE,
+                type: types.AMOUNT_CHANGE,
                 payload: {
                     pocketKey: 'pocket2',
                     value: '51',
-                    rate: 0.376
                 }
             })
         ).toEqual({
             pocket1: {
                 active: false,
-                credit: null,
-                debit: 19.18,
+                amount: 19.18,
                 currency: 'EUR',
+                rate: 0.376,
             },
             pocket2: {
                 active: true,
-                credit: 51,
-                debit: null,
+                amount: 51,
                 currency: 'USD',
             }
         });

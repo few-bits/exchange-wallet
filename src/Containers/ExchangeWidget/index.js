@@ -13,7 +13,11 @@ import {
 import Pocket from '../../Components/Pocket';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
-import { onCreditChange, setActive } from '../../redux/pockets/actions';
+import {
+    amountOnChange,
+    currencyOnChange,
+    setActive
+} from '../../redux/pockets/actions';
 
 class ExchangeWidget extends Component {
     static propTypes = {
@@ -31,14 +35,12 @@ class ExchangeWidget extends Component {
         pockets: PropTypes.shape({
             pocket1: PropTypes.shape({
                 active: PropTypes.bool,
-                credit: PropTypes.number,
-                debit: PropTypes.number,
+                amount: PropTypes.number,
                 currency: PropTypes.string
             }),
             pocket2: PropTypes.shape({
                 active: PropTypes.bool,
-                credit: PropTypes.number,
-                debit: PropTypes.number,
+                amount: PropTypes.number,
                 currency: PropTypes.string
             }),
         }).isRequired,
@@ -56,7 +58,7 @@ class ExchangeWidget extends Component {
         actions: PropTypes.shape({
             startRatesRefreshing: PropTypes.func,
             stopRatesRefreshing: PropTypes.func,
-            onCreditChange: PropTypes.func,
+            amountOnChange: PropTypes.func,
             setActive: PropTypes.func,
         }).isRequired,
     };
@@ -75,33 +77,32 @@ class ExchangeWidget extends Component {
         const {
             account,
             pockets,
-            rates,
             actions,
         } = this.props;
 
-        const {currency: currency1} = pockets.pocket1;
-        const {currency: currency2} = pockets.pocket2;
-
-        const pocket1Rate = rates[currency1] ? rates[currency1][currency2] : 0;
-        const pocket2Rate = rates[currency2] ? rates[currency2][currency1] : 0;
+        const {currency: currency1} = pockets[POCKET_KEY_1];
+        const {currency: currency2} = pockets[POCKET_KEY_2];
+        const currencies = Object.keys(account);
 
         return (
             <div className={styles.exchangeWidget}>
                 <header className={styles.header}>
                     <Pocket
-                        { ...pockets.pocket1 }
+                        { ...pockets[POCKET_KEY_1] }
+                        currencies={currencies}
                         pocketKey={POCKET_KEY_1}
                         balance={account[currency1].balance}
-                        rate={pocket1Rate}
-                        onCreditChange={actions.onCreditChange}
+                        amountOnChange={actions.amountOnChange}
+                        currencyOnChange={actions.currencyOnChange}
                         setActive={actions.setActive}
                     />
                     <Pocket
-                        { ...pockets.pocket2 }
+                        { ...pockets[POCKET_KEY_2] }
+                        currencies={currencies}
                         pocketKey={POCKET_KEY_2}
                         balance={account[currency2].balance}
-                        rate={pocket2Rate}
-                        onCreditChange={actions.onCreditChange}
+                        amountOnChange={actions.amountOnChange}
+                        currencyOnChange={actions.currencyOnChange}
                         setActive={actions.setActive}
                     />
                 </header>
@@ -120,7 +121,8 @@ const mapDispatchToProps = (dispatch) => ({
     actions: {
         startRatesRefreshing: () => dispatch(startRatesRefreshing),
         stopRatesRefreshing: () => dispatch(stopRatesRefreshing),
-        onCreditChange: (pocketKey, value, rate) => dispatch(onCreditChange(pocketKey, value, rate)),
+        amountOnChange: (value) => dispatch(amountOnChange(value)),
+        currencyOnChange: (pocketKey, value) => dispatch(currencyOnChange(pocketKey, value)),
         setActive: (pocketKey) => dispatch(setActive(pocketKey)),
     }
 });

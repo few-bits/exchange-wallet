@@ -1,15 +1,14 @@
-export const getPocketData = (sourcePocket, destPocket, value, rate) => {
+export const getPocketAmount = (sourcePocket, value) => {
     const doubleValue = Number(value);
+    const { active, rate } = sourcePocket;
 
-    if (sourcePocket === destPocket) {
+    if (active) {
         return {
-            credit: Number(doubleValue.toFixed(2)),
-            debit: null,
+            amount: Number(doubleValue.toFixed(2)),
         };
     } else {
         return {
-            credit: null,
-            debit: Number((doubleValue * rate).toFixed(2)),
+            amount: Number((doubleValue * rate).toFixed(2)),
         };
     }
 };
