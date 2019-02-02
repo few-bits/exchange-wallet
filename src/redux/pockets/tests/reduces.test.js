@@ -29,7 +29,7 @@ describe('rates reducer', () => {
                 },
                 pocket2: {
                     active: true,
-                    amount: null,
+                    amount: 0,
                     currency: 'USD',
                 }
             }, {
@@ -41,12 +41,12 @@ describe('rates reducer', () => {
         ).toEqual({
             pocket1: {
                 active: true,
-                amount: null,
+                amount: 0,
                 currency: 'EUR',
             },
             pocket2: {
                 active: false,
-                amount: null,
+                amount: 0,
                 currency: 'USD',
             }
         });
@@ -62,7 +62,7 @@ describe('rates reducer', () => {
                 },
                 pocket2: {
                     active: true,
-                    amount: null,
+                    amount: 0,
                     currency: 'USD',
                 }
             }, {
@@ -75,12 +75,12 @@ describe('rates reducer', () => {
         ).toEqual({
             pocket1: {
                 active: false,
-                amount: null,
+                amount: 0,
                 currency: 'GBR',
             },
             pocket2: {
                 active: true,
-                amount: null,
+                amount: 0,
                 currency: 'USD',
             }
         });
@@ -97,7 +97,7 @@ describe('rates reducer', () => {
                 },
                 pocket2: {
                     active: true,
-                    amount: null,
+                    amount: 0,
                     currency: 'USD',
                 }
             }, {

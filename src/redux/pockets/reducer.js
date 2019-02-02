@@ -36,12 +36,12 @@ export default (state = {
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
                     active: pocketKey === POCKET_KEY_1,
-                    amount: null,
+                    amount: 0,
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
                     active: pocketKey === POCKET_KEY_2,
-                    amount: null,
+                    amount: 0,
                 },
             };
         }
@@ -53,12 +53,12 @@ export default (state = {
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
                     currency: pocketKey === POCKET_KEY_1 ? currency : state[POCKET_KEY_1].currency,
-                    amount: null,
+                    amount: 0,
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
                     currency: pocketKey === POCKET_KEY_2 ? currency : state[POCKET_KEY_2].currency,
-                    amount: null,
+                    amount: 0,
                 },
             };
         }

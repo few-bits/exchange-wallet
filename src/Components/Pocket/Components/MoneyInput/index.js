@@ -4,15 +4,55 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 class MoneyInput extends Component {
+    constructor(props) {
+        super(props);
+
+        const { value } = this.props;
+
+        this.state = {
+            stringValue: this.getStringValue(value),
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log(this.props.value + ' || ' + this.state.stringValue);
+        if (this.props.value !== Number(this.state.stringValue)) {
+            this.setState({
+                stringValue: this.getStringValue(this.props.value),
+            });
+        }
+    }
+
+    getStringValue(value) {
+        return value === 0 ? '' : value;
+    }
+
     onInputChange(e) {
         const { onChange } = this.props;
-        const { value } = e.target;
-        onChange(value);
+
+        const value = this.trimLeadingZeroes(e.target.value);
+
+        if (this.isValid(value)) {
+            this.setState({
+                stringValue: value,
+            });
+
+            onChange(value);
+        }
+    }
+
+    trimLeadingZeroes(value) {
+        return value.replace(/^[0]+/, '0');
+    }
+
+    isValid(value) {
+        const regexp = new RegExp(`^$|^\\d{1,9}?(\\.\\d{0,2})?$`);
+
+        return regexp.test(value);
     }
 
     render() {
         const {
-            value,
             active,
             setActive,
         } = this.props;
@@ -20,9 +60,13 @@ class MoneyInput extends Component {
         return (
             <div className={styles.moneyInput}>
                 <input
-                    value={value}
+                    value={this.state.stringValue}
                     onChange={this.onInputChange.bind(this)}
-                    onClick={setActive}
+                    onClick={() => {
+                        if (!active) {
+                            setActive();
+                        }
+                    }}
                     type="text"
                 />
             </div>
