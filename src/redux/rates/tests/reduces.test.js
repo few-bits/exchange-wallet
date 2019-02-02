@@ -30,5 +30,5 @@ describe('rates reducer', () => {
             'USD': { 'EUR': 0.9, 'GBP': 0.6 },
             'GBP': { 'EUR': 0.4, 'USD': 0.4 },
         });
-    })
+    });
 });

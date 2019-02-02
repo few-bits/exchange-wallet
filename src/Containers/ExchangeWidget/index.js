@@ -27,9 +27,15 @@ class ExchangeWidget extends Component {
         }).isRequired,
         pockets: PropTypes.shape({
             pocket1: PropTypes.shape({
+                active: PropTypes.bool,
+                credit: PropTypes.number,
+                debit: PropTypes.number,
                 currency: PropTypes.string
             }),
             pocket2: PropTypes.shape({
+                active: PropTypes.bool,
+                credit: PropTypes.number,
+                debit: PropTypes.number,
                 currency: PropTypes.string
             }),
         }).isRequired,
@@ -59,7 +65,6 @@ class ExchangeWidget extends Component {
         const { actions } = this.props;
         actions.stopRatesRefreshing();
     }
-
 
     render() {
         const {
