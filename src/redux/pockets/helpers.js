@@ -1,6 +1,5 @@
 export const getPocketData = (sourcePocket, destPocket, value, rate) => {
-    const filtredValue = value.match(/^\d+(?:\.\d{1,2})?/);
-    const doubleValue = Number(filtredValue ? filtredValue[0] : 0);
+    const doubleValue = Number(value);
 
     if (sourcePocket === destPocket) {
         return {

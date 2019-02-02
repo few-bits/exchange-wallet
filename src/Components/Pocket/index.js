@@ -23,12 +23,14 @@ const Pocket = ({
         {
             active
             ? <input
-                    type="number"
-                    min="0"
-                    step=".01"
                     value={credit ? credit : ''}
                     onChange={(e) => {
-                        onCreditChange(pocketKey, e.target.value, rate)
+                        const { value } = e.target;
+                        const match = value.match(/^[0-9]+(\.[0-9]{1,2})?$/);
+                        let filteredValue = match ? match[0] : credit;
+                        filteredValue = value === '' ? value : filteredValue;
+
+                        onCreditChange(pocketKey, filteredValue, rate)
                     }}
                     autoFocus
                 />
