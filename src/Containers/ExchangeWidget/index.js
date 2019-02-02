@@ -7,10 +7,13 @@ import {
     CURRENCY_EUR,
     CURRENCY_USD,
     CURRENCY_GBP,
+    POCKET_KEY_1,
+    POCKET_KEY_2,
 } from '../../Constants';
 import Pocket from '../../Components/Pocket';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
+import { onCreditChange, setActive } from '../../redux/pockets/actions';
 
 class ExchangeWidget extends Component {
     static propTypes = {
@@ -53,6 +56,8 @@ class ExchangeWidget extends Component {
         actions: PropTypes.shape({
             startRatesRefreshing: PropTypes.func,
             stopRatesRefreshing: PropTypes.func,
+            onCreditChange: PropTypes.func,
+            setActive: PropTypes.func,
         }).isRequired,
     };
 
@@ -71,6 +76,7 @@ class ExchangeWidget extends Component {
             account,
             pockets,
             rates,
+            actions,
         } = this.props;
 
         const {currency: currency1} = pockets.pocket1;
@@ -83,14 +89,20 @@ class ExchangeWidget extends Component {
             <div className={styles.exchangeWidget}>
                 <header className={styles.header}>
                     <Pocket
-                        currency={currency1}
+                        { ...pockets.pocket1 }
+                        pocketKey={POCKET_KEY_1}
                         balance={account[currency1].balance}
                         rate={pocket1Rate}
+                        onCreditChange={actions.onCreditChange}
+                        setActive={actions.setActive}
                     />
                     <Pocket
-                        currency={currency2}
+                        { ...pockets.pocket2 }
+                        pocketKey={POCKET_KEY_2}
                         balance={account[currency2].balance}
                         rate={pocket2Rate}
+                        onCreditChange={actions.onCreditChange}
+                        setActive={actions.setActive}
                     />
                 </header>
             </div>
@@ -107,7 +119,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     actions: {
         startRatesRefreshing: () => dispatch(startRatesRefreshing),
-        stopRatesRefreshing: () => dispatch(stopRatesRefreshing)
+        stopRatesRefreshing: () => dispatch(stopRatesRefreshing),
+        onCreditChange: (pocketKey, value, rate) => dispatch(onCreditChange(pocketKey, value, rate)),
+        setActive: (pocketKey) => dispatch(setActive(pocketKey)),
     }
 });
 
