@@ -4,10 +4,10 @@ import {
 } from '../../Constants';
 
 export default (state = {
-    source: {
+    pocket1: {
         currency: CURRENCY_EUR,
     },
-    receiver: {
+    pocket2: {
         currency: CURRENCY_USD,
     }
 }, action) => {

@@ -26,11 +26,11 @@ class ExchangeWidget extends Component {
             })
         }).isRequired,
         pockets: PropTypes.shape({
-            source: PropTypes.shape({
-                currency: PropTypes.oneOf([CURRENCY_EUR, CURRENCY_USD, CURRENCY_GBP])
+            pocket1: PropTypes.shape({
+                currency: PropTypes.string
             }),
-            receiver: PropTypes.shape({
-                currency: PropTypes.oneOf([CURRENCY_EUR, CURRENCY_USD, CURRENCY_GBP])
+            pocket2: PropTypes.shape({
+                currency: PropTypes.string
             }),
         }).isRequired,
         rates: PropTypes.shape({
@@ -68,24 +68,24 @@ class ExchangeWidget extends Component {
             rates,
         } = this.props;
 
-        const {currency: sourceCurrency} = pockets.source;
-        const {currency: receiverCurrency} = pockets.receiver;
+        const {currency: currency1} = pockets.pocket1;
+        const {currency: currency2} = pockets.pocket2;
 
-        const sourceRate = rates[receiverCurrency] ? rates[receiverCurrency][sourceCurrency] : 0;
-        const receiverRate = rates[sourceCurrency] ? rates[sourceCurrency][receiverCurrency] : 0;
+        const pocket1Rate = rates[currency1] ? rates[currency1][currency2] : 0;
+        const pocket2Rate = rates[currency2] ? rates[currency2][currency1] : 0;
 
         return (
             <div className={styles.exchangeWidget}>
                 <header className={styles.header}>
                     <Pocket
-                        currency={sourceCurrency}
-                        balance={account[sourceCurrency].balance}
-                        rate={receiverRate}
+                        currency={currency1}
+                        balance={account[currency1].balance}
+                        rate={pocket1Rate}
                     />
                     <Pocket
-                        currency={receiverCurrency}
-                        balance={account[receiverCurrency].balance}
-                        rate={sourceRate}
+                        currency={currency2}
+                        balance={account[currency2].balance}
+                        rate={pocket2Rate}
                     />
                 </header>
             </div>
