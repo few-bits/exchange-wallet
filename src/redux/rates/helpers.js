@@ -15,3 +15,22 @@ export const getRawRates = (currencies, serverData) => {
         return memo;
     }, {});
 };
+
+export const patchRates = (rates) => {
+    const delta = getDelta();
+    return rates.map((rate) => {
+        const patchedRate = Object.keys(rate.rates).reduce((memo, currency) => {
+            memo[currency] = rate.rates[currency] + delta;
+            return memo;
+        },{});
+
+        return {
+            ...rate,
+            rates: patchedRate,
+        }
+    });
+};
+
+const getDelta = (min = 0.1, max = 0.5) => {
+    return Math.random() * (max - min);
+};

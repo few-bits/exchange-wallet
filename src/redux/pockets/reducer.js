@@ -11,6 +11,7 @@ import {
 } from './types';
 import { GET_RATES_SUCCESS } from '../rates/types';
 
+import { roundNumber } from '../../utils';
 import { getPocketAmount } from './helpers';
 import { getRawRates } from '../rates/helpers';
 
@@ -95,15 +96,20 @@ export default (state = {
             const ratePocket1 = ratesPocket2[currencyPocket2][currencyPocket1];
             const ratePocket2 = ratesPocket1[currencyPocket1][currencyPocket2];
 
+            const amountPocket1 = state[POCKET_KEY_1].active ? state[POCKET_KEY_1].amount : state[POCKET_KEY_2].amount * ratePocket1;
+            const amountPocket2 = state[POCKET_KEY_2].active ? state[POCKET_KEY_2].amount : state[POCKET_KEY_1].amount * ratePocket2;
+
             return {
                 ...state,
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
                     rate: ratePocket1,
+                    amount: roundNumber(amountPocket1),
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
                     rate: ratePocket2,
+                    amount: roundNumber(amountPocket2),
                 },
             };
         }

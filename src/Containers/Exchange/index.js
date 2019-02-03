@@ -21,6 +21,7 @@ import {
     setActive
 } from '../../redux/pockets/actions';
 import { exchangeCurrency } from '../../redux/account/actions';
+import { setRandomRatesMode } from '../../redux/system/actions';
 import lang from '../../lang';
 
 const getCurrentPocketData = (pocket1, pocket2) => {
@@ -91,9 +92,13 @@ class Exchange extends Component {
             amountOnChange: PropTypes.func,
             setActive: PropTypes.func,
             exchangeCurrency: PropTypes.func,
+            setRandomRatesMode: PropTypes.func,
         }).isRequired,
         network: PropTypes.shape({
             getRatesStatus: PropTypes.string
+        }).isRequired,
+        system: PropTypes.shape({
+            randomRates: PropTypes.bool,
         }).isRequired,
     };
 
@@ -114,6 +119,7 @@ class Exchange extends Component {
             actions,
             rates,
             network,
+            system,
         } = this.props;
 
         const currencies = Object.keys(account);
@@ -135,8 +141,19 @@ class Exchange extends Component {
         const isPocketDisabled = !rate || isNetworkError;
         const isExchangeButtonDisabled = isPocketDisabled || amountFrom > account[currencyFrom].balance;
 
+        console.log('randomRates:::', system.randomRates);
         return (
             <div className={styles.exchange}>
+                <div>
+                    <label htmlFor="randomRates">{lang.RANDOMIZE_RATES}</label>
+                    <input
+                        type="checkbox"
+                        name="randomRates"
+                        id="randomRates"
+                        value={system.randomRates}
+                        onChange={(e) => actions.setRandomRatesMode(e.target.checked)}
+                    />
+                </div>
                 <Pocket
                     { ...pockets[POCKET_KEY_1] }
                     currencies={currencies}
@@ -179,6 +196,7 @@ const mapStateToProps = (state) => ({
     pockets: state.pockets,
     rates: state.rates,
     network: state.network,
+    system: state.system,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -189,6 +207,7 @@ const mapDispatchToProps = (dispatch) => ({
         currencyOnChange: (pocketKey, value, rates) => dispatch(currencyOnChange(pocketKey, value, rates)),
         setActive: (pocketKey) => dispatch(setActive(pocketKey)),
         exchangeCurrency: (pocketFrom, pocketTo) => dispatch(exchangeCurrency(pocketFrom, pocketTo)),
+        setRandomRatesMode: (randomRates) => dispatch(setRandomRatesMode(randomRates)),
     }
 });
 

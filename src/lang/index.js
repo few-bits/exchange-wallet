@@ -19,4 +19,5 @@ export default {
     UPDATE_BALANCE: 'Update balance',
     LOADING: 'Loading...',
     NETWORK_ERROR: 'Network error!',
+    RANDOMIZE_RATES: 'Randomize rates',
 };

@@ -1,3 +1,4 @@
+import { roundNumber } from '../../utils';
 import {
     CURRENCY_EUR,
     CURRENCY_USD,
@@ -35,10 +36,10 @@ export default (state = {
             return {
                 ...state,
                 [currencyFrom]: {
-                    balance: state[currencyFrom].balance - amountFrom,
+                    balance: roundNumber(state[currencyFrom].balance - amountFrom),
                 },
                 [currencyTo]: {
-                    balance: state[currencyTo].balance + amountTo,
+                    balance: roundNumber(state[currencyTo].balance + amountTo),
                 }
             }
         }
