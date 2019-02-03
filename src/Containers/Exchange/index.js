@@ -20,6 +20,7 @@ import {
     currencyOnChange,
     setActive
 } from '../../redux/pockets/actions';
+import { exchangeCurrency } from '../../redux/account/actions';
 import lang from '../../lang';
 
 const getCurrentPocketData = (pocket1, pocket2) => {
@@ -29,19 +30,22 @@ const getCurrentPocketData = (pocket1, pocket2) => {
     let currencyFrom = currency1;
     let currencyTo = currency2;
     let rate = rate2;
-    let amount = amount1;
+    let amountFrom = amount1;
+    let amountTo = amount2;
     if (active2) {
         currencyFrom = currency2;
         currencyTo = currency1;
         rate = rate1;
-        amount = amount2;
+        amountFrom = amount2;
+        amountTo = amount1;
     }
 
     return {
         currencyFrom,
         currencyTo,
         rate,
-        amount,
+        amountFrom,
+        amountTo,
     };
 };
 
@@ -86,6 +90,7 @@ class Exchange extends Component {
             stopRatesRefreshing: PropTypes.func,
             amountOnChange: PropTypes.func,
             setActive: PropTypes.func,
+            exchangeCurrency: PropTypes.func,
         }).isRequired,
         network: PropTypes.shape({
             getRatesStatus: PropTypes.string
@@ -121,13 +126,14 @@ class Exchange extends Component {
             currencyFrom,
             currencyTo,
             rate,
-            amount,
+            amountFrom,
+            amountTo,
         } = getCurrentPocketData(pocket1, pocket2);
 
         const invertRate = currency2 !== currencyFrom;
         const isNetworkError = network.getRatesStatus === RESPONSE_STATUS_FAIL;
         const isPocketDisabled = !rate || isNetworkError;
-        const isExchangeButtonDisabled = isPocketDisabled || amount > account[currencyFrom].balance;
+        const isExchangeButtonDisabled = isPocketDisabled || amountFrom > account[currencyFrom].balance;
 
         return (
             <div className={styles.exchange}>
@@ -161,7 +167,7 @@ class Exchange extends Component {
                 <Button
                     text={lang.EXCHANGE}
                     disabled={isExchangeButtonDisabled}
-                    onClick={() => {}}
+                    onClick={() => actions.exchangeCurrency({currencyFrom, amountFrom}, {currencyTo, amountTo})}
                 />
             </div>
         );
@@ -182,6 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
         amountOnChange: (value) => dispatch(amountOnChange(value)),
         currencyOnChange: (pocketKey, value, rates) => dispatch(currencyOnChange(pocketKey, value, rates)),
         setActive: (pocketKey) => dispatch(setActive(pocketKey)),
+        exchangeCurrency: (pocketFrom, pocketTo) => dispatch(exchangeCurrency(pocketFrom, pocketTo)),
     }
 });
 

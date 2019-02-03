@@ -4,7 +4,7 @@ import {
     CURRENCY_GBP,
 } from '../../Constants';
 
-import { UPDATE_BALANCE } from './types';
+import { UPDATE_BALANCE, EXCHANGE_CURRENCY } from './types';
 
 export default (state = {
     [CURRENCY_EUR]: {
@@ -27,6 +27,20 @@ export default (state = {
                     balance,
                 }
             };
+        }
+        case EXCHANGE_CURRENCY: {
+            const { pocketFrom, pocketTo } = action.payload;
+            const { currencyFrom, amountFrom } = pocketFrom;
+            const { currencyTo, amountTo } = pocketTo;
+            return {
+                ...state,
+                [currencyFrom]: {
+                    balance: state[currencyFrom].balance - amountFrom,
+                },
+                [currencyTo]: {
+                    balance: state[currencyTo].balance + amountTo,
+                }
+            }
         }
         default:
             return state
