@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import formatMessage from 'format-message';
 
 import styles from './styles.module.scss';
+import lang from '../../../../lang';
+
+const getOptionLabel = (currencyCode) => ({
+    value: currencyCode,
+    label: formatMessage(lang.CURRENCY_SELECTOR_OPTION, { currencyCode, currencyDescription: lang.CURRENCY_DESCRIPTION[currencyCode] }),
+    className: 'currency-selector-option',
+});
 
 const CurrencySelector = ({
     currency,
@@ -10,14 +18,9 @@ const CurrencySelector = ({
     onSelect,
     disabled,
 }) => {
-    const options = currencies.map((id) => ({
-            value: id,
-            label: id,
-            className: 'currency-selector-option',
-        })
-    );
+    const options = currencies.map(getOptionLabel);
 
-    const defaultValue = {value: currency, label: currency};
+    const defaultValue = getOptionLabel(currency);
 
     return (
         <div className={styles.currencySelector}>

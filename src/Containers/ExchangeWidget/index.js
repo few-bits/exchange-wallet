@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import styles from './styles.module.scss';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../Constants';
 import Pocket from '../../Components/Pocket';
 import Rate from '../../Components/Rate';
+import Button from '../../Components/Button';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
 import {
@@ -19,24 +20,28 @@ import {
     currencyOnChange,
     setActive
 } from '../../redux/pockets/actions';
+import lang from '../../lang';
 
-const getRateData = (pocket1, pocket2) => {
-    const {currency: currency1, rate: rate1 } = pocket1;
-    const {currency: currency2, rate: rate2, active: active2 } = pocket2;
+const getCurrentPocketData = (pocket1, pocket2) => {
+    const {currency: currency1, rate: rate1, amount: amount1 } = pocket1;
+    const {currency: currency2, rate: rate2, amount: amount2, active: active2 } = pocket2;
 
     let currencyFrom = currency1;
     let currencyTo = currency2;
     let rate = rate2;
+    let amount = amount1;
     if (active2) {
         currencyFrom = currency2;
         currencyTo = currency1;
         rate = rate1;
+        amount = amount2;
     }
 
     return {
         currencyFrom,
         currencyTo,
         rate,
+        amount,
     };
 };
 
@@ -112,7 +117,8 @@ class ExchangeWidget extends Component {
             currencyFrom,
             currencyTo,
             rate,
-        } = getRateData(pocket1, pocket2);
+            amount,
+        } = getCurrentPocketData(pocket1, pocket2);
 
         return (
             <div className={styles.exchangeWidget}>
@@ -141,6 +147,11 @@ class ExchangeWidget extends Component {
                         currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
                         setActive={actions.setActive}
                         disabled={!rate}
+                    />
+                    <Button
+                        text={lang.EXCHANGE}
+                        disabled={!rate || amount > account[currencyFrom].balance}
+                        onClick={() => {}}
                     />
                 </header>
             </div>

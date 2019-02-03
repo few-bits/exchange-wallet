@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import formatMessage from 'format-message';
 
 import styles from './styles.module.scss';
 import { CURRENCY_SIGNS } from '../../../../Constants';
+import lang from '../../../../lang';
 
 const Balance = ({
     currency,
     balance,
 }) => {
+    const content = formatMessage(lang.BALANCE, {
+        balance,
+        currencySign: CURRENCY_SIGNS[currency],
+    });
+
     return (
         <div className={styles.pocketBalance}>
-            <span className={styles.balance}>{balance}</span>
-            <span className={styles.currencySign}>{CURRENCY_SIGNS[currency]}</span>
+            {content}
         </div>
     );
 };

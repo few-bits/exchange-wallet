@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
+import lang from '../../../../lang';
 
 class MoneyInput extends Component {
     constructor(props) {
@@ -68,6 +69,7 @@ class MoneyInput extends Component {
                         }
                     }}
                     type="text"
+                    placeholder={lang.MONEY_INPUT_PLACEHOLDER}
                     disabled={disabled}
                 />
             </div>
