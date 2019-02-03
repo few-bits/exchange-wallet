@@ -55,6 +55,7 @@ class MoneyInput extends Component {
         const {
             active,
             setActive,
+            disabled,
         } = this.props;
 
         return (
@@ -68,6 +69,7 @@ class MoneyInput extends Component {
                         }
                     }}
                     type="text"
+                    disabled={disabled}
                 />
             </div>
         );
@@ -79,10 +81,12 @@ MoneyInput.propTypes = {
     active: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     setActive: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };
 
 MoneyInput.defaultProps = {
     value: 0,
+    disabled: false,
 };
 
 export default MoneyInput;

@@ -11,6 +11,7 @@ import {
     POCKET_KEY_2,
 } from '../../Constants';
 import Pocket from '../../Components/Pocket';
+import Rate from '../../Components/Rate';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
 import {
@@ -80,9 +81,18 @@ class ExchangeWidget extends Component {
             actions,
         } = this.props;
 
-        const {currency: currency1} = pockets[POCKET_KEY_1];
-        const {currency: currency2} = pockets[POCKET_KEY_2];
+        const {currency: currency1, rate: rate1, active } = pockets[POCKET_KEY_1];
+        const {currency: currency2, rate: rate2 } = pockets[POCKET_KEY_2];
         const currencies = Object.keys(account);
+
+        let currencyFrom = currency1;
+        let currencyTo = currency2;
+        let rate = rate2;
+        if (!active) {
+            currencyFrom = currency2;
+            currencyTo = currency1;
+            rate = rate1;
+        }
 
         return (
             <div className={styles.exchangeWidget}>
@@ -95,6 +105,12 @@ class ExchangeWidget extends Component {
                         amountOnChange={actions.amountOnChange}
                         currencyOnChange={actions.currencyOnChange}
                         setActive={actions.setActive}
+                        disabled={!rate}
+                    />
+                    <Rate
+                        currencyFrom={currencyFrom}
+                        currencyTo={currencyTo}
+                        rate={rate}
                     />
                     <Pocket
                         { ...pockets[POCKET_KEY_2] }
@@ -104,6 +120,7 @@ class ExchangeWidget extends Component {
                         amountOnChange={actions.amountOnChange}
                         currencyOnChange={actions.currencyOnChange}
                         setActive={actions.setActive}
+                        disabled={!rate}
                     />
                 </header>
             </div>

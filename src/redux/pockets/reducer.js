@@ -84,8 +84,8 @@ export default (state = {
             const ratesPocket1 = getRates([currencyPocket1], serverData);
             const ratesPocket2 = getRates([currencyPocket2], serverData);
 
-            const ratePocket1 = ratesPocket1[currencyPocket1][currencyPocket2];
-            const ratePocket2 = ratesPocket2[currencyPocket2][currencyPocket1];
+            const ratePocket1 = ratesPocket2[currencyPocket2][currencyPocket1];
+            const ratePocket2 = ratesPocket1[currencyPocket1][currencyPocket2];
 
             return {
                 ...state,

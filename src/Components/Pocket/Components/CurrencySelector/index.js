@@ -7,6 +7,7 @@ const CurrencySelector = ({
     currency,
     currencies,
     onSelect,
+    disabled,
 }) => {
     return (
         <div className={styles.currencySelector}>
@@ -19,6 +20,11 @@ CurrencySelector.propTypes = {
     currency: PropTypes.string.isRequired,
     currencies: PropTypes.array.isRequired,
     onSelect: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+};
+
+CurrencySelector.defaultProps = {
+    disabled: false,
 };
 
 export default CurrencySelector;
