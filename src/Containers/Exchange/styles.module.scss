@@ -1,3 +1,14 @@
 .exchange {
     text-align: center;
+
+    .randomRates {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 15px;
+
+        .caption {
+            margin-left: 15px;
+        }
+    }
 }

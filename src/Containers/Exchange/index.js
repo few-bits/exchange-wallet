@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
 
 import styles from './styles.module.scss';
 import {
@@ -8,7 +10,8 @@ import {
     CURRENCY_USD,
     CURRENCY_GBP,
     POCKET_KEY_1,
-    POCKET_KEY_2, RESPONSE_STATUS_FAIL,
+    POCKET_KEY_2,
+    RESPONSE_STATUS_FAIL,
 } from '../../Constants';
 import Pocket from '../../Components/Pocket';
 import Rate from '../../Components/Info';
@@ -141,19 +144,16 @@ class Exchange extends Component {
         const isPocketDisabled = !rate || isNetworkError;
         const isExchangeButtonDisabled = isPocketDisabled || amountFrom > account[currencyFrom].balance;
 
-        console.log('randomRates:::', system.randomRates);
         return (
             <div className={styles.exchange}>
-                <div>
-                    <label htmlFor="randomRates">{lang.RANDOMIZE_RATES}</label>
-                    <input
-                        type="checkbox"
-                        name="randomRates"
-                        id="randomRates"
-                        value={system.randomRates}
+                <label className={styles.randomRates}>
+                    <Toggle
+                        defaultChecked={system.randomRates}
+                        icons={false}
                         onChange={(e) => actions.setRandomRatesMode(e.target.checked)}
                     />
-                </div>
+                    <span className={styles.caption}>{lang.RANDOMIZE_RATES}</span>
+                </label>
                 <Pocket
                     { ...pockets[POCKET_KEY_1] }
                     currencies={currencies}
