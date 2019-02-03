@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
+    NavLink,
 } from 'react-router-dom';
 
 import createStore from './store/createStore';
@@ -20,13 +20,11 @@ const App = () => (
         <Router>
             <div className={styles.app}>
                 <nav>
-                    <Link to={URL_ROOT}>{lang.EXCHANGE_LINK}</Link>
-                    <Link to={URL_WALLET}>{lang.WALLET_LINK}</Link>
+                    <NavLink exact={true} activeClassName={styles.activeLink} to={URL_ROOT}>{lang.EXCHANGE_LINK}</NavLink>
+                    <NavLink activeClassName={styles.activeLink} to={URL_WALLET}>{lang.WALLET_LINK}</NavLink>
                 </nav>
-                <div className={styles.content}>
-                    <Route path={URL_ROOT} exact component={Exchange} />
-                    <Route path={`${URL_WALLET}/:currencyCode?`} component={Wallet} />
-                </div>
+                <Route path={URL_ROOT} exact component={Exchange} />
+                <Route path={`${URL_WALLET}/:currencyCode?`} component={Wallet} />
             </div>
         </Router>
     </Provider>

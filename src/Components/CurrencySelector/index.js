@@ -20,7 +20,7 @@ const CurrencySelector = ({
 }) => {
     const options = currencies.map(getOptionLabel);
 
-    const defaultValue = getOptionLabel(currency);
+    const defaultValue = { label: currency };
 
     return (
         <div className={styles.currencySelector}>

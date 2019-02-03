@@ -1,3 +1,14 @@
-.wallet {
+@import "../../assets/styles/mixins";
 
+.wallet {
+  text-align: center;
+
+  .pocket {
+    @include pocket();
+    margin-bottom: 15px;
+
+    .block {
+      @include block();
+    }
+  }
 }

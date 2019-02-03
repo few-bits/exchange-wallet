@@ -63,6 +63,7 @@ class MoneyInput extends PureComponent {
                     value={this.state.stringValue}
                     onChange={this.onInputChange.bind(this)}
                     onClick={onClick}
+                    onFocus={onClick}
                     type="text"
                     placeholder={lang.MONEY_INPUT_PLACEHOLDER}
                     disabled={disabled}

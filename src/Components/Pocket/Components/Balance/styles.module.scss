@@ -1,3 +1,9 @@
-.pocketBalance {
+@import "../../../../assets/styles/variables";
 
+.pocketBalance {
+  margin-top: 15px;
+}
+
+.notEnoughMoney {
+  color: $dangerColor;
 }

@@ -1,5 +1,9 @@
-$blueColor: #525dce;
+@import "../../assets/styles/mixins";
 
 .pocket {
-    color: $blueColor;
+    @include pocket();
+
+    .block {
+        @include block();
+    }
 }

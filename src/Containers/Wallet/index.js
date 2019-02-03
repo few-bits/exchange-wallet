@@ -40,12 +40,16 @@ class Wallet extends Component {
 
         return (
             <div className={styles.wallet}>
-                <CurrencySelector
-                    currency={currency}
-                    currencies={currencies}
-                    onSelect={this.currencyOnChange.bind(this)}
-                />
-                <MoneyInput value={balance} onChange={this.balanceOnChange.bind(this)} />
+                <div className={styles.pocket}>
+                    <div className={styles.block}>
+                        <CurrencySelector
+                            currency={currency}
+                            currencies={currencies}
+                            onSelect={this.currencyOnChange.bind(this)}
+                        />
+                        <MoneyInput value={balance} onChange={this.balanceOnChange.bind(this)} />
+                    </div>
+                </div>
                 <Button
                     onClick={() => balanceOnUpdate(currency, balance)}
                     text={lang.UPDATE_BALANCE}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './styles.module.scss';
 import {
@@ -22,24 +23,35 @@ const Pocket = ({
     setActive,
     disabled,
 }) => {
+    const notEnoughMoney = balance < amount && active;
     return (
         <div className={styles.pocket}>
-            <Balance currency={currency} balance={balance}/>
-            <CurrencySelector
+            <div className={classnames({
+                    [styles.block]: true,
+                    [styles.active]: active,
+                })}
+            >
+                <CurrencySelector
+                    currency={currency}
+                    currencies={currencies}
+                    onSelect={(currency) => currencyOnChange(pocketKey, currency)}
+                    disabled={disabled}
+                />
+                <MoneyInput
+                    value={amount}
+                    onChange={amountOnChange}
+                    onClick={() => {
+                        if (!active) {
+                            setActive(pocketKey);
+                        }
+                    }}
+                    disabled={disabled}
+                />
+            </div>
+            <Balance
                 currency={currency}
-                currencies={currencies}
-                onSelect={(currency) => currencyOnChange(pocketKey, currency)}
-                disabled={disabled}
-            />
-            <MoneyInput
-                value={amount}
-                onChange={amountOnChange}
-                onClick={() => {
-                    if (!active) {
-                        setActive(pocketKey);
-                    }
-                }}
-                disabled={disabled}
+                balance={balance}
+                notEnoughMoney={notEnoughMoney}
             />
         </div>
     );

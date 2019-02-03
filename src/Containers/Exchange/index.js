@@ -120,40 +120,41 @@ class Exchange extends Component {
             amount,
         } = getCurrentPocketData(pocket1, pocket2);
 
+        const invertRate = currency2 !== currencyFrom;
+
         return (
             <div className={styles.exchange}>
-                <header className={styles.header}>
-                    <Pocket
-                        { ...pockets[POCKET_KEY_1] }
-                        currencies={currencies}
-                        pocketKey={POCKET_KEY_1}
-                        balance={account[currency1].balance}
-                        amountOnChange={actions.amountOnChange}
-                        currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
-                        setActive={actions.setActive}
-                        disabled={!rate}
-                    />
-                    <Rate
-                        currencyFrom={currencyFrom}
-                        currencyTo={currencyTo}
-                        rate={rate}
-                    />
-                    <Pocket
-                        { ...pockets[POCKET_KEY_2] }
-                        currencies={currencies}
-                        pocketKey={POCKET_KEY_2}
-                        balance={account[currency2].balance}
-                        amountOnChange={actions.amountOnChange}
-                        currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
-                        setActive={actions.setActive}
-                        disabled={!rate}
-                    />
-                    <Button
-                        text={lang.EXCHANGE}
-                        disabled={!rate || amount > account[currencyFrom].balance}
-                        onClick={() => {}}
-                    />
-                </header>
+                <Pocket
+                    { ...pockets[POCKET_KEY_1] }
+                    currencies={currencies}
+                    pocketKey={POCKET_KEY_1}
+                    balance={account[currency1].balance}
+                    amountOnChange={actions.amountOnChange}
+                    currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
+                    setActive={actions.setActive}
+                    disabled={!rate}
+                />
+                <Rate
+                    currencyFrom={currencyFrom}
+                    currencyTo={currencyTo}
+                    rate={rate}
+                    invert={invertRate}
+                />
+                <Pocket
+                    { ...pockets[POCKET_KEY_2] }
+                    currencies={currencies}
+                    pocketKey={POCKET_KEY_2}
+                    balance={account[currency2].balance}
+                    amountOnChange={actions.amountOnChange}
+                    currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
+                    setActive={actions.setActive}
+                    disabled={!rate}
+                />
+                <Button
+                    text={lang.EXCHANGE}
+                    disabled={!rate || amount > account[currencyFrom].balance}
+                    onClick={() => {}}
+                />
             </div>
         );
     }

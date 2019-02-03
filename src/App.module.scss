@@ -1,18 +1,47 @@
+@import "assets/styles/reset";
+@import "assets/styles/mixins";
+@import "assets/styles/variables";
+
 .app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $lightGrayColor;
+
   nav {
     position: absolute;
     left: 0;
     top: 0;
-  }
+    background-color: $whiteColor;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    @include box-shadow();
 
-  .content {
-    text-align: center;
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
+    a {
+      margin-right: 15px;
+      display: inline-block;
+      position: relative;
+
+      &.activeLink,
+      &:hover {
+        color: $greenColor;
+        text-decoration: none;
+      }
+
+      &:hover {
+        &:after {
+          position: absolute;
+          display: block;
+          content: '';
+          width: 100%;
+          height: 3px;
+          background-color: $greenColor;
+        }
+      }
+    }
   }
 }

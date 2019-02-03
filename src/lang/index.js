@@ -17,4 +17,5 @@ export default {
     MONEY_INPUT_PLACEHOLDER: '0',
     EXCHANGE: 'Exchange',
     UPDATE_BALANCE: 'Update balance',
+    LOADING: 'Loading...',
 };

@@ -1,5 +1,53 @@
-.rate {
-  .loading {
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
 
+@mixin rate-logo($img) {
+  background: $greenColor url($img) center no-repeat;
+  background-size: 60%;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.rate {
+  margin: 50px auto 75px auto;
+  background-color: $whiteColor;
+  display: inline-block;
+  padding: 10px;
+  color: $greenColor;
+  min-width: 200px;
+  height: 40px;
+  @include border-radius(20px);
+
+  .info,
+  .loading {
+    position: relative;
+    padding-left: 30px;
+
+    &:before {
+      position: absolute;
+      left: -5px;
+      top: -5px;
+      display: block;
+      content: '';
+      width: 30px;
+      height: 30px;
+      transition: transform 0.5s linear;
+      @include border-radius(20px);
+      @include box-shadow(0, 4px, 20px, 2px, $greenColor);
+    }
+  }
+
+  .info.invert:before {
+    transform: rotate(180deg);
+  }
+
+  .info:before {
+    @include rate-logo("./assets/arrow-up.svg");
+  }
+  .loading:before {
+    @include rate-logo("./assets/loading.svg");
+    animation: spinner 3s linear infinite;
   }
 }

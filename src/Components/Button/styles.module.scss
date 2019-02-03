@@ -1,3 +1,29 @@
-.button {
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
 
+.button {
+  padding: 0.75rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: $primaryColor;
+  outline: none;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  @include border-radius(6px);
+
+  &:hover {
+    background-color: lighten( $primaryColor, 10% );
+  }
+
+  &:active {
+    background-color: darken( $primaryColor, 5% );
+  }
+
+  &[disabled] {
+    background-color: $darkerGrayColor;
+    cursor: not-allowed;
+  }
 }

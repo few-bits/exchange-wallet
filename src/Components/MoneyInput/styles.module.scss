@@ -1,3 +1,13 @@
 .moneyInput {
+  flex-grow: 1;
 
+  input {
+    text-align: right;
+    width: 100%;
+    font-size: 18px;
+
+    &[disabled] {
+      background-color: transparent;
+    }
+  }
 }
