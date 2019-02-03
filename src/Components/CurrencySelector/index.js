@@ -4,7 +4,7 @@ import Select from 'react-select';
 import formatMessage from 'format-message';
 
 import styles from './styles.module.scss';
-import lang from '../../../../lang';
+import lang from '../../lang';
 
 const getOptionLabel = (currencyCode) => ({
     value: currencyCode,

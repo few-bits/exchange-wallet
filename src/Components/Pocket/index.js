@@ -6,8 +6,8 @@ import {
     POCKET_KEY_1,
     POCKET_KEY_2,
 } from '../../Constants';
-import CurrencySelector from './Components/CurrencySelector';
-import MoneyInput from './Components/MoneyInput';
+import CurrencySelector from '../CurrencySelector';
+import MoneyInput from '../MoneyInput';
 import Balance from './Components/Balance';
 
 const Pocket = ({
@@ -34,8 +34,11 @@ const Pocket = ({
             <MoneyInput
                 value={amount}
                 onChange={amountOnChange}
-                active={active}
-                setActive={() => setActive(pocketKey)}
+                onClick={() => {
+                    if (!active) {
+                        setActive(pocketKey);
+                    }
+                }}
                 disabled={disabled}
             />
         </div>

@@ -1,8 +1,12 @@
-.exchangeWidget {
-    text-align: center;
-}
+.app {
+  nav {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 
-.header {
+  .content {
+    text-align: center;
     background-color: #282c34;
     min-height: 100vh;
     display: flex;
@@ -10,5 +14,5 @@
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+  }
 }

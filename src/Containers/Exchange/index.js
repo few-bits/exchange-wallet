@@ -45,7 +45,7 @@ const getCurrentPocketData = (pocket1, pocket2) => {
     };
 };
 
-class ExchangeWidget extends Component {
+class Exchange extends Component {
     static propTypes = {
         account: PropTypes.shape({
             [CURRENCY_EUR]: PropTypes.shape({
@@ -121,7 +121,7 @@ class ExchangeWidget extends Component {
         } = getCurrentPocketData(pocket1, pocket2);
 
         return (
-            <div className={styles.exchangeWidget}>
+            <div className={styles.exchange}>
                 <header className={styles.header}>
                     <Pocket
                         { ...pockets[POCKET_KEY_1] }
@@ -175,4 +175,4 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExchangeWidget);
+export default connect(mapStateToProps, mapDispatchToProps)(Exchange);

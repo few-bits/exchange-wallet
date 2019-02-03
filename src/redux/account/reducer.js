@@ -4,6 +4,8 @@ import {
     CURRENCY_GBP,
 } from '../../Constants';
 
+import { UPDATE_BALANCE } from './types';
+
 export default (state = {
     [CURRENCY_EUR]: {
         balance: 100
@@ -16,6 +18,16 @@ export default (state = {
     }
 }, action) => {
     switch (action.type) {
+        case UPDATE_BALANCE: {
+            const {currency, balance} = action.payload;
+            return {
+                ...state,
+                [currency]: {
+                    ...state[currency],
+                    balance,
+                }
+            };
+        }
         default:
             return state
     }

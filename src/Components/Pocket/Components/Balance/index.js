@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import formatMessage from 'format-message';
+import { Link } from 'react-router-dom';
 
 import styles from './styles.module.scss';
-import { CURRENCY_SIGNS } from '../../../../Constants';
+import {CURRENCY_SIGNS, URL_WALLET} from '../../../../Constants';
 import lang from '../../../../lang';
 
 const Balance = ({
@@ -16,9 +17,12 @@ const Balance = ({
     });
 
     return (
-        <div className={styles.pocketBalance}>
+        <Link
+            to={`${URL_WALLET}/${currency}`}
+            className={styles.pocketBalance}
+        >
             {content}
-        </div>
+        </Link>
     );
 };
 

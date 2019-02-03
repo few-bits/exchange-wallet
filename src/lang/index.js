@@ -1,4 +1,6 @@
 export default {
+    EXCHANGE_LINK: 'Exchange',
+    WALLET_LINK: 'Wallet',
     BALANCE: 'Balance: {balance} {currencySign}',
     RATE: '1 {fromCurrencySign} = {rate} {toCurrencySign}',
     CURRENCY_DESCRIPTION: {
@@ -14,4 +16,5 @@ export default {
     CURRENCY_SELECTOR_OPTION: '{currencyCode} - {currencyDescription}',
     MONEY_INPUT_PLACEHOLDER: '0',
     EXCHANGE: 'Exchange',
+    UPDATE_BALANCE: 'Update balance',
 };

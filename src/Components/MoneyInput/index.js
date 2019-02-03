@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
-import lang from '../../../../lang';
+import lang from '../../lang';
 
-class MoneyInput extends Component {
+class MoneyInput extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -53,8 +53,7 @@ class MoneyInput extends Component {
 
     render() {
         const {
-            active,
-            setActive,
+            onClick,
             disabled,
         } = this.props;
 
@@ -63,11 +62,7 @@ class MoneyInput extends Component {
                 <input
                     value={this.state.stringValue}
                     onChange={this.onInputChange.bind(this)}
-                    onClick={() => {
-                        if (!active) {
-                            setActive();
-                        }
-                    }}
+                    onClick={onClick}
                     type="text"
                     placeholder={lang.MONEY_INPUT_PLACEHOLDER}
                     disabled={disabled}
@@ -79,15 +74,15 @@ class MoneyInput extends Component {
 
 MoneyInput.propTypes = {
     value: PropTypes.number,
-    active: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    setActive: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     disabled: PropTypes.bool,
 };
 
 MoneyInput.defaultProps = {
     value: 0,
     disabled: false,
+    onClick: () => {},
 };
 
 export default MoneyInput;
