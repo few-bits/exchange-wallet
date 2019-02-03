@@ -1,8 +1,8 @@
 @import "../../assets/styles/variables";
 @import "../../assets/styles/mixins";
 
-@mixin rate-logo($img) {
-  background: $greenColor url($img) center no-repeat;
+@mixin rate-logo($img, $bgColor: $greenColor) {
+  background: $bgColor url($img) center no-repeat;
   background-size: 60%;
 }
 
@@ -10,7 +10,7 @@
   to {transform: rotate(360deg);}
 }
 
-.rate {
+.info {
   margin: 50px auto 75px auto;
   background-color: $whiteColor;
   display: inline-block;
@@ -20,7 +20,8 @@
   height: 40px;
   @include border-radius(20px);
 
-  .info,
+  .rate,
+  .networkError,
   .loading {
     position: relative;
     padding-left: 30px;
@@ -39,13 +40,23 @@
     }
   }
 
-  .info.invert:before {
+  .rate.invert:before {
     transform: rotate(180deg);
   }
 
-  .info:before {
+
+  .rate:before {
     @include rate-logo("./assets/arrow-up.svg");
   }
+
+  .networkError {
+    color: $dangerColor;
+    &:before {
+      @include rate-logo("./assets/exclamation.svg", $dangerColor);
+      @include box-shadow(0, 4px, 20px, 2px, $dangerColor);
+    }
+  }
+
   .loading:before {
     @include rate-logo("./assets/loading.svg");
     animation: spinner 3s linear infinite;

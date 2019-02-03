@@ -4,16 +4,18 @@ import {
     CURRENCY_GBP,
 } from '../../Constants';
 
-import { SET_RATES } from './types';
+import { GET_RATES_SUCCESS, GET_RATES_FAIL } from './types';
 import { getRawRates } from './helpers';
 
-export default (state = {
+const initialState = {
     [CURRENCY_EUR]: {},
     [CURRENCY_USD]: {},
     [CURRENCY_GBP]: {},
-}, action) => {
+};
+
+export default (state = { ...initialState }, action) => {
     switch (action.type) {
-        case SET_RATES: {
+        case GET_RATES_SUCCESS: {
             const { rates: serverData } = action.payload;
             const ratesArray = Object.keys(state);
 
@@ -23,6 +25,9 @@ export default (state = {
                 ...state,
                 ...newRates,
             };
+        }
+        case GET_RATES_FAIL: {
+            return { ...initialState };
         }
         default:
             return state

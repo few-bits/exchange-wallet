@@ -11,24 +11,33 @@ const Rate = ({
     currencyTo,
     rate,
     invert,
+    isNetworkError,
 }) => {
-    const content = rate
-        ? (
+    let content = null;
+
+    if (isNetworkError) {
+        content = (
+            <div className={styles.networkError}>
+                {lang.NETWORK_ERROR}
+            </div>
+        );
+    } else if (rate) {
+        content = (
             <div className={classnames({
-                [styles.info]: true,
+                [styles.rate]: true,
                 [styles.invert]: invert,
             })}>
                 <span>1{CURRENCY_SIGNS[currencyFrom]}</span>
                 <span>=</span>
                 <span>{rate}{CURRENCY_SIGNS[currencyTo]}</span>
             </div>
-        )
-        : (
-            <div className={styles.loading}>{lang.LOADING}</div>
         );
+    } else {
+        content = <div className={styles.loading}>{lang.LOADING}</div>;
+    }
 
     return (
-        <div className={styles.rate}>
+        <div className={styles.info}>
             {content}
         </div>
     );
@@ -39,11 +48,13 @@ Rate.propTypes = {
     currencyTo: PropTypes.string.isRequired,
     rate: PropTypes.number,
     invert: PropTypes.bool,
+    isNetworkError: PropTypes.bool,
 };
 
 Rate.defaultProps = {
     rate: null,
     invert: false,
+    isNetworkError: false,
 };
 
 export default Rate;

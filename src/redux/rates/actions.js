@@ -1,5 +1,7 @@
 import { REFRESH_RATES_INTERVAL } from '../../Constants';
-import { SET_RATES } from './types';
+import {GET_RATES_FAIL, GET_RATES_SUCCESS} from './types';
+
+import { getRate } from '../../transport/rates';
 
 let refreshInterval = null;
 
@@ -19,15 +21,16 @@ export const stopRatesRefreshing = () => {
 };
 
 const getRates = async (currencies, dispatch) => {
-    const rates = await Promise.all(currencies.map(getRate));
+    try {
+        const rates = await Promise.all(currencies.map(getRate));
 
-    dispatch({
-        type: SET_RATES,
-        payload: { rates }
-    });
-};
+        dispatch({
+            type: GET_RATES_SUCCESS,
+            payload: { rates }
+        });
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: GET_RATES_FAIL });
+    }
 
-const getRate = async (base) => {
-    const response = await fetch(`https://api.exchangeratesapi.io/latest?base=${base}`);
-    return await response.json();
 };

@@ -18,4 +18,5 @@ export default {
     EXCHANGE: 'Exchange',
     UPDATE_BALANCE: 'Update balance',
     LOADING: 'Loading...',
+    NETWORK_ERROR: 'Network error!',
 };

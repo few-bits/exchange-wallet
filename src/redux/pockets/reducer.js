@@ -9,7 +9,7 @@ import {
     CURRENCY_CHANGE,
     AMOUNT_CHANGE,
 } from './types';
-import { SET_RATES } from '../rates/types';
+import { GET_RATES_SUCCESS } from '../rates/types';
 
 import { getPocketAmount } from './helpers';
 import { getRawRates } from '../rates/helpers';
@@ -84,7 +84,7 @@ export default (state = {
                 },
             };
         }
-        case SET_RATES: {
+        case GET_RATES_SUCCESS: {
             const { rates: serverData } = action.payload;
             const currencyPocket1 = state[POCKET_KEY_1].currency;
             const currencyPocket2 = state[POCKET_KEY_2].currency;

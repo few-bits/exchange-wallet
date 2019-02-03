@@ -10,14 +10,14 @@ describe('rates reducer', () => {
         })
     });
 
-    it('should handle SET_RATES ', () => {
+    it('should handle GET_RATES_SUCCESS ', () => {
         expect(
             reducer({
                 'EUR': { 'USD': 0.3, 'GBP': 0.2 },
                 'USD': { 'EUR': 0.4, 'GBP': 0.1 },
                 'GBP': { 'EUR': 0.4, 'USD': 0.4 },
             }, {
-                type: types.SET_RATES,
+                type: types.GET_RATES_SUCCESS,
                 payload: {
                     rates: [
                         { base: 'EUR', rates: { 'USD': 0.8, 'GBP': 0.5 }},

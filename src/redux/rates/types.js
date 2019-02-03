@@ -1,1 +1,2 @@
-export const SET_RATES = 'rates/SET_RATES';
+export const GET_RATES_SUCCESS = 'rates/GET_RATES_SUCCESS';
+export const GET_RATES_FAIL = 'rates/GET_RATES_FAIL';

@@ -8,10 +8,10 @@ import {
     CURRENCY_USD,
     CURRENCY_GBP,
     POCKET_KEY_1,
-    POCKET_KEY_2,
+    POCKET_KEY_2, RESPONSE_STATUS_FAIL,
 } from '../../Constants';
 import Pocket from '../../Components/Pocket';
-import Rate from '../../Components/Rate';
+import Rate from '../../Components/Info';
 import Button from '../../Components/Button';
 
 import { startRatesRefreshing, stopRatesRefreshing } from '../../redux/rates/actions';
@@ -87,6 +87,9 @@ class Exchange extends Component {
             amountOnChange: PropTypes.func,
             setActive: PropTypes.func,
         }).isRequired,
+        network: PropTypes.shape({
+            getRatesStatus: PropTypes.string
+        }).isRequired,
     };
 
     componentDidMount() {
@@ -105,6 +108,7 @@ class Exchange extends Component {
             pockets,
             actions,
             rates,
+            network,
         } = this.props;
 
         const currencies = Object.keys(account);
@@ -121,6 +125,9 @@ class Exchange extends Component {
         } = getCurrentPocketData(pocket1, pocket2);
 
         const invertRate = currency2 !== currencyFrom;
+        const isNetworkError = network.getRatesStatus === RESPONSE_STATUS_FAIL;
+        const isPocketDisabled = !rate || isNetworkError;
+        const isExchangeButtonDisabled = isPocketDisabled || amount > account[currencyFrom].balance;
 
         return (
             <div className={styles.exchange}>
@@ -132,13 +139,14 @@ class Exchange extends Component {
                     amountOnChange={actions.amountOnChange}
                     currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
                     setActive={actions.setActive}
-                    disabled={!rate}
+                    disabled={isPocketDisabled}
                 />
                 <Rate
                     currencyFrom={currencyFrom}
                     currencyTo={currencyTo}
                     rate={rate}
                     invert={invertRate}
+                    isNetworkError={isNetworkError}
                 />
                 <Pocket
                     { ...pockets[POCKET_KEY_2] }
@@ -148,11 +156,11 @@ class Exchange extends Component {
                     amountOnChange={actions.amountOnChange}
                     currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
                     setActive={actions.setActive}
-                    disabled={!rate}
+                    disabled={isPocketDisabled}
                 />
                 <Button
                     text={lang.EXCHANGE}
-                    disabled={!rate || amount > account[currencyFrom].balance}
+                    disabled={isExchangeButtonDisabled}
                     onClick={() => {}}
                 />
             </div>
@@ -164,6 +172,7 @@ const mapStateToProps = (state) => ({
     account: state.account,
     pockets: state.pockets,
     rates: state.rates,
+    network: state.network,
 });
 
 const mapDispatchToProps = (dispatch) => ({
