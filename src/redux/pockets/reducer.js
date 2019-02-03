@@ -12,7 +12,7 @@ import {
 import { SET_RATES } from '../rates/types';
 
 import { getPocketAmount } from './helpers';
-import { getRates } from '../rates/helpers';
+import { getRawRates } from '../rates/helpers';
 
 export default (state = {
     [POCKET_KEY_1]: {
@@ -46,19 +46,27 @@ export default (state = {
             };
         }
         case CURRENCY_CHANGE: {
-            const { pocketKey, currency } = action.payload;
+            const { pocketKey, currency, rates } = action.payload;
+
+            const currencyPocket1 = pocketKey === POCKET_KEY_1 ? currency : state[POCKET_KEY_1].currency;
+            const currencyPocket2 = pocketKey === POCKET_KEY_2 ? currency : state[POCKET_KEY_2].currency;
+
+            const ratePocket1 = rates[currencyPocket2][currencyPocket1];
+            const ratePocket2 = rates[currencyPocket1][currencyPocket2];
+
             return {
                 ...state,
-
                 [POCKET_KEY_1]: {
                     ...state[POCKET_KEY_1],
-                    currency: pocketKey === POCKET_KEY_1 ? currency : state[POCKET_KEY_1].currency,
+                    currency: currencyPocket1,
                     amount: 0,
+                    rate: ratePocket1,
                 },
                 [POCKET_KEY_2]: {
                     ...state[POCKET_KEY_2],
-                    currency: pocketKey === POCKET_KEY_2 ? currency : state[POCKET_KEY_2].currency,
+                    currency: currencyPocket2,
                     amount: 0,
+                    rate: ratePocket2,
                 },
             };
         }
@@ -81,8 +89,8 @@ export default (state = {
             const currencyPocket1 = state[POCKET_KEY_1].currency;
             const currencyPocket2 = state[POCKET_KEY_2].currency;
 
-            const ratesPocket1 = getRates([currencyPocket1], serverData);
-            const ratesPocket2 = getRates([currencyPocket2], serverData);
+            const ratesPocket1 = getRawRates([currencyPocket1], serverData);
+            const ratesPocket2 = getRawRates([currencyPocket2], serverData);
 
             const ratePocket1 = ratesPocket2[currencyPocket2][currencyPocket1];
             const ratePocket2 = ratesPocket1[currencyPocket1][currencyPocket2];

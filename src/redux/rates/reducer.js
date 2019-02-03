@@ -5,7 +5,7 @@ import {
 } from '../../Constants';
 
 import { SET_RATES } from './types';
-import { getRates } from './helpers';
+import { getRawRates } from './helpers';
 
 export default (state = {
     [CURRENCY_EUR]: {},
@@ -17,7 +17,7 @@ export default (state = {
             const { rates: serverData } = action.payload;
             const ratesArray = Object.keys(state);
 
-            const newRates = getRates(ratesArray, serverData);
+            const newRates = getRawRates(ratesArray, serverData);
 
             return {
                 ...state,

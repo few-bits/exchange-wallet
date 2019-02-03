@@ -20,6 +20,26 @@ import {
     setActive
 } from '../../redux/pockets/actions';
 
+const getRateData = (pocket1, pocket2) => {
+    const {currency: currency1, rate: rate1 } = pocket1;
+    const {currency: currency2, rate: rate2, active: active2 } = pocket2;
+
+    let currencyFrom = currency1;
+    let currencyTo = currency2;
+    let rate = rate2;
+    if (active2) {
+        currencyFrom = currency2;
+        currencyTo = currency1;
+        rate = rate1;
+    }
+
+    return {
+        currencyFrom,
+        currencyTo,
+        rate,
+    };
+};
+
 class ExchangeWidget extends Component {
     static propTypes = {
         account: PropTypes.shape({
@@ -79,20 +99,20 @@ class ExchangeWidget extends Component {
             account,
             pockets,
             actions,
+            rates,
         } = this.props;
 
-        const {currency: currency1, rate: rate1, active } = pockets[POCKET_KEY_1];
-        const {currency: currency2, rate: rate2 } = pockets[POCKET_KEY_2];
         const currencies = Object.keys(account);
+        const pocket1 = pockets[POCKET_KEY_1];
+        const pocket2 = pockets[POCKET_KEY_2];
+        const currency1 = pockets[POCKET_KEY_1].currency;
+        const currency2 = pockets[POCKET_KEY_2].currency;
 
-        let currencyFrom = currency1;
-        let currencyTo = currency2;
-        let rate = rate2;
-        if (!active) {
-            currencyFrom = currency2;
-            currencyTo = currency1;
-            rate = rate1;
-        }
+        const {
+            currencyFrom,
+            currencyTo,
+            rate,
+        } = getRateData(pocket1, pocket2);
 
         return (
             <div className={styles.exchangeWidget}>
@@ -103,7 +123,7 @@ class ExchangeWidget extends Component {
                         pocketKey={POCKET_KEY_1}
                         balance={account[currency1].balance}
                         amountOnChange={actions.amountOnChange}
-                        currencyOnChange={actions.currencyOnChange}
+                        currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
                         setActive={actions.setActive}
                         disabled={!rate}
                     />
@@ -118,7 +138,7 @@ class ExchangeWidget extends Component {
                         pocketKey={POCKET_KEY_2}
                         balance={account[currency2].balance}
                         amountOnChange={actions.amountOnChange}
-                        currencyOnChange={actions.currencyOnChange}
+                        currencyOnChange={(pocketKey, value) => actions.currencyOnChange(pocketKey, value, rates)}
                         setActive={actions.setActive}
                         disabled={!rate}
                     />
@@ -139,7 +159,7 @@ const mapDispatchToProps = (dispatch) => ({
         startRatesRefreshing: () => dispatch(startRatesRefreshing),
         stopRatesRefreshing: () => dispatch(stopRatesRefreshing),
         amountOnChange: (value) => dispatch(amountOnChange(value)),
-        currencyOnChange: (pocketKey, value) => dispatch(currencyOnChange(pocketKey, value)),
+        currencyOnChange: (pocketKey, value, rates) => dispatch(currencyOnChange(pocketKey, value, rates)),
         setActive: (pocketKey) => dispatch(setActive(pocketKey)),
     }
 });

@@ -1,4 +1,4 @@
-import { getRates } from '../helpers';
+import { getRawRates } from '../helpers';
 
 describe('getRate', () => {
     it('full data', () => {
@@ -11,7 +11,7 @@ describe('getRate', () => {
             'EUR': { 'USD': 1.2 },
             'USD': { 'EUR': 0.9},
         };
-        expect(getRates(currencies, serverData)).toEqual(result);
+        expect(getRawRates(currencies, serverData)).toEqual(result);
     });
 
     it('partial data', () => {
@@ -22,14 +22,14 @@ describe('getRate', () => {
         const result = {
             'USD': { 'EUR': 0.9},
         };
-        expect(getRates(currencies, serverData)).toEqual(result);
+        expect(getRawRates(currencies, serverData)).toEqual(result);
     });
 
     it('no data', () => {
         const currencies = ['USD', 'EUR'];
         const serverData = [];
         const result = {};
-        expect(getRates(currencies, serverData)).toEqual(result);
+        expect(getRawRates(currencies, serverData)).toEqual(result);
     });
 
     it('wrong data', () => {
@@ -38,13 +38,13 @@ describe('getRate', () => {
             { base: 'USD', ratesw: { 'EUR': 0.9 } },
         ];
         const result = {};
-        expect(getRates(currencies, serverData)).toEqual(result);
+        expect(getRawRates(currencies, serverData)).toEqual(result);
     });
 
     it('wrong data [undefined]', () => {
         const currencies = ['USD', 'EUR'];
         const serverData = undefined;
         const result = {};
-        expect(getRates(currencies, serverData)).toEqual(result);
+        expect(getRawRates(currencies, serverData)).toEqual(result);
     });
 });

@@ -69,19 +69,26 @@ describe('rates reducer', () => {
                 type: types.CURRENCY_CHANGE,
                 payload: {
                     pocketKey: 'pocket1',
-                    currency: 'GBR'
+                    currency: 'GBP',
+                    rates: {
+                        'EUR': { 'USD': 0.3, 'GBP': 0.2 },
+                        'USD': { 'EUR': 0.4, 'GBP': 0.1 },
+                        'GBP': { 'EUR': 0.4, 'USD': 0.4 },
+                    }
                 }
             })
         ).toEqual({
             pocket1: {
                 active: false,
                 amount: 0,
-                currency: 'GBR',
+                currency: 'GBP',
+                rate: 0.1,
             },
             pocket2: {
                 active: true,
                 amount: 0,
                 currency: 'USD',
+                rate: 0.4
             }
         });
     });

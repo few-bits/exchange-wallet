@@ -28,7 +28,7 @@ const Pocket = ({
             <CurrencySelector
                 currency={currency}
                 currencies={currencies}
-                onSelect={currencyOnChange}
+                onSelect={(currency) => currencyOnChange(pocketKey, currency)}
                 disabled={disabled}
             />
             <MoneyInput

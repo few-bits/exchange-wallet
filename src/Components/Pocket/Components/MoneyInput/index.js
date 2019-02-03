@@ -15,7 +15,6 @@ class MoneyInput extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props.value + ' || ' + this.state.stringValue);
         if (this.props.value !== Number(this.state.stringValue)) {
             this.setState({
                 stringValue: this.getStringValue(this.props.value),

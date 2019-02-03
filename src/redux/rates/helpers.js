@@ -1,4 +1,4 @@
-export const getRates = (currencies, serverData) => {
+export const getRawRates = (currencies, serverData) => {
     if (!Array.isArray(serverData)) {
         return {};
     }

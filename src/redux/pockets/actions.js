@@ -9,9 +9,9 @@ export const setActive = (pocketKey) => (dispatch) => dispatch({
     payload: { pocketKey },
 });
 
-export const currencyOnChange = (currency, pocketKey) => (dispatch) => dispatch({
+export const currencyOnChange = (pocketKey, currency, rates) => (dispatch) => dispatch({
     type: CURRENCY_CHANGE,
-    payload: { pocketKey, currency },
+    payload: { pocketKey, currency, rates },
 });
 
 export const amountOnChange = (value) => (dispatch) => {
