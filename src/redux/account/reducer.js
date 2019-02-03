@@ -33,6 +33,11 @@ export default (state = {
             const { pocketFrom, pocketTo } = action.payload;
             const { currencyFrom, amountFrom } = pocketFrom;
             const { currencyTo, amountTo } = pocketTo;
+
+            if (currencyFrom === currencyTo) {
+                return state;
+            }
+
             return {
                 ...state,
                 [currencyFrom]: {
