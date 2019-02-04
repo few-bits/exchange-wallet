@@ -20,6 +20,7 @@ class Wallet extends Component {
         this.state = { currency, balance };
     }
     static propTypes = {
+        account: PropTypes.object.isRequired,
         currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
         currency: PropTypes.string.isRequired,
         balance: PropTypes.number.isRequired,
@@ -27,7 +28,11 @@ class Wallet extends Component {
     };
 
     currencyOnChange(currency) {
-        this.setState({ currency });
+        const { account } = this.props;
+        this.setState({
+            currency,
+            balance: account[currency].balance,
+        });
     }
 
     balanceOnChange(balance) {
@@ -71,6 +76,7 @@ const mapStateToProps = (state, ownProps) => {
     const { balance } = account[currency];
 
     return {
+        account,
         currencies,
         currency,
         balance,
