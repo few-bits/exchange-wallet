@@ -1,3 +1,5 @@
+import { roundNumber } from '../../utils';
+
 export const getRawRates = (currencies, serverData) => {
     if (!Array.isArray(serverData)) {
         return {};
@@ -7,9 +9,13 @@ export const getRawRates = (currencies, serverData) => {
         const currentRates = serverData.find(({ base }) => base === baseCurrency);
 
         if (currentRates !== undefined && currentRates.rates) {
+            const roundedRates = Object.keys(currentRates.rates).reduce((memo, key) => {
+                memo[key] = roundNumber(currentRates.rates[key]);
+                return memo;
+            }, {});
             memo = {
                 ...memo,
-                [baseCurrency]: currentRates.rates,
+                [baseCurrency]: roundedRates,
             };
         }
         return memo;

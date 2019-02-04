@@ -1,3 +1,3 @@
 export const roundNumber = (number, digitsAfterDecimal = 2) => {
-    return Number(number.toFixed(digitsAfterDecimal));
+    return Number(Number(number).toFixed(digitsAfterDecimal));
 };
